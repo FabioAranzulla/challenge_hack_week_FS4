@@ -1,0 +1,6 @@
+.bla{ 
+    width: 15rem;
+}
+
+.table>:not(caption)>*>* {
+    padding: 2.7rem 2.5rem !important; }
