@@ -19,7 +19,8 @@
       integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
       crossorigin="anonymous"
     ></script>
-    <button id="downloadbtn">Scarica</button> <!-- PEZZO DI CSV -->
+    <button id="downloadbtn">Scarica</button>
+    <!-- PEZZO DI CSV -->
     <div class="dropdown">
       <select class="dropdown-content">
         <option value="qualsiasi">All News</option>
@@ -37,7 +38,6 @@
         </thead>
         <tbody></tbody>
       </table>
-
     </div>
   </body>
 </html>
@@ -47,11 +47,10 @@
   crossorigin="anonymous"
 ></script>
 <script>
-    let lista = [];
+  let lista = [];
   const container = document.querySelector("tbody");
   const bottone = document.querySelector("#genera-news");
-  
-  
+
   async function fetchArticoloSito(value) {
     const response = await fetch(
       `https://api.spaceflightnewsapi.net/v3/articles?_limit=10`
@@ -85,16 +84,21 @@
             );
           },
         });
-        lista.push(element.publishedAt.slice(0, 10),element.title,element.url,element.imageUrl)
+        lista.push(
+          element.publishedAt.slice(0, 10),
+          element.title,
+          element.url,
+          element.imageUrl
+        );
       }
     });
-    console.log(lista)
+    // console.log(lista);
   }
 
   let testSelect = document.querySelector(".dropdown-content");
   testSelect.addEventListener("change", () => {
     container.innerHTML = "";
-    lista.splice(0,lista.length);
+    lista.splice(0, lista.length);
     fetchArticoloSito(testSelect.value);
   });
 
@@ -162,77 +166,93 @@
   //PARTE CSV
   //PARTE CSV
 
-//   const download = function (data) {
- 
-//  // Creating a Blob for having a csv file format
-//  // and passing the data with type
-//  const blob = new Blob([data], { type: 'text/csv' });
+  //   const download = function (data) {
 
-//  // Creating an object for downloading url
-//  const url = window.URL.createObjectURL(blob)
+  //  // Creating a Blob for having a csv file format
+  //  // and passing the data with type
+  //  const blob = new Blob([data], { type: 'text/csv' });
 
-//  // Creating an anchor(a) tag of HTML
-//  const a = document.createElement('a')
+  //  // Creating an object for downloading url
+  //  const url = window.URL.createObjectURL(blob)
 
-//  // Passing the blob downloading url
-//  a.setAttribute('href', url)
+  //  // Creating an anchor(a) tag of HTML
+  //  const a = document.createElement('a')
 
-//  // Setting the anchor tag attribute for downloading
-//  // and passing the download file name
-//  a.setAttribute('download', 'download.csv');
+  //  // Passing the blob downloading url
+  //  a.setAttribute('href', url)
 
-//  // Performing a download with click
-//  a.click()
-// }
+  //  // Setting the anchor tag attribute for downloading
+  //  // and passing the download file name
+  //  a.setAttribute('download', 'download.csv');
 
-// const csvmaker = function (data) {
+  //  // Performing a download with click
+  //  a.click()
+  // }
 
-//  // Empty array for storing the values
-//  csvRows = [];
+  // const csvmaker = function (data) {
 
-//  // Headers is basically a keys of an
-//  // object which is id, name, and
-//  // profession
-//  const headers = Object.keys(data);
+  //  // Empty array for storing the values
+  //  csvRows = [];
 
-//  // As for making csv format, headers
-//  // must be separated by comma and
-//  // pushing it into array
-//  csvRows.push(headers.join(','));
+  //  // Headers is basically a keys of an
+  //  // object which is id, name, and
+  //  // profession
+  //  const headers = Object.keys(data);
 
-//  // Pushing Object values into array
-//  // with comma separation
-//  const values = Object.values(data).join(',');
-//  csvRows.push(values)
+  //  // As for making csv format, headers
+  //  // must be separated by comma and
+  //  // pushing it into array
+  //  csvRows.push(headers.join(','));
 
-//  // Returning the array joining with new line
-//  return csvRows.join('\n')
-// }
+  //  // Pushing Object values into array
+  //  // with comma separation
+  //  const values = Object.values(data).join(',');
+  //  csvRows.push(values)
 
-// const get = async function () {
+  //  // Returning the array joining with new line
+  //  return csvRows.join('\n')
+  // }
 
-//  // JavaScript object
-//  const data = {
-//      id: 1,
-//      name: "Geeks",
-//      profession: "developer"
-//  }
+  // const get = async function () {
 
-//  const csvdata = csvmaker(lista);
-//  download(csvdata);
-// }
+  //  // JavaScript object
+  //  const data = {
+  //      id: 1,
+  //      name: "Geeks",
+  //      profession: "developer"
+  //  }
 
+  //  const csvdata = csvmaker(lista);
+  //  download(csvdata);
+  // }
 
-// const btn = document.getElementById('downloadbtn');
-// btn.addEventListener('click', get);
+  // console.log(lista);
 
+  function downloadbtn() {
+    let csv = "Data,Titolo,Url,Immagine\n";
 
-//FINISCE CSV
-//FINISCE CSV
-//FINISCE CSV
+    lista.forEach((row) => {
+      console.log(lista);
+      // csv += row.join(",");
+      csv += row + "\n";
+    });
+
+    let hiddenElement = document.createElement("a");
+    hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+    hiddenElement.target = "_blank";
+
+    //provide the name for the CSV file to be downloaded
+    hiddenElement.download = "lista.csv";
+    hiddenElement.click();
+  }
+
+  const btn = document.getElementById("downloadbtn");
+  btn.addEventListener("click", downloadbtn);
+
+  //FINISCE CSV
+  //FINISCE CSV
+  //FINISCE CSV
 
   // createListTagBlog()
   // createListTagReports()
-
-
 </script>
