@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "discord.js": "^12.5.3",
+    "discord.js": "^14.1.2",
     "fullcalendar": "^5.11.2"
   }
 }
